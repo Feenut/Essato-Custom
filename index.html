@@ -374,11 +374,13 @@
                                 item.style.width = "100%";
                             });
 
-                            // Ensure text is visible when menu is open
+                            // Ensure text is visible and properly sized when menu is open
                             document.querySelectorAll('.nav-link').forEach(link => {
                                 link.style.color = '#1a2b4a';
                                 link.style.textAlign = 'center'; // Center menu text
-                                link.style.fontSize = '1.3rem'; // Larger text
+                                link.style.fontSize = '1.3rem'; // Larger text matching other pages
+                                link.style.letterSpacing = '2px'; // Match letter spacing with other pages
+                                link.style.padding = '10px 20px'; // Consistent padding
                             });
                         } else {
                             navMenu.classList.remove('active');
@@ -909,7 +911,7 @@
             }
 
             .nav-link {
-                font-size: 1.1rem !important;
+                font-size: 1.3rem !important;
                 padding: 8px 20px !important;
                 display: block !important;
                 width: 100% !important;
