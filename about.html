@@ -151,7 +151,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>Essato Custom Clothing</h4>
-                    <p>Premium Custom Suits & Bespoke Tailoring</p>
+                    <p>Premium Custom Suits & Bespoke Clothing</p>
                     <p class="service-areas">Proudly serving: Layton, Bountiful, Farmington, Kaysville, Clearfield, Syracuse, and surrounding areas in Davis County</p>
                 </div>
                 <div class="footer-col">
@@ -161,15 +161,6 @@
                         <li><a href="about.html">About</a></li>
                         <li><a href="pricing.html">Pricing</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Our Services</h4>
-                    <ul class="footer-links">
-                        <li>Custom Suits in Layton, UT</li>
-                        <li>Bespoke Clothing in Bountiful, UT</li>
-                        <li>Made-to-Measure Shirts in Davis County</li>
-                        <li>Expert Suit Fitting in Farmington, UT</li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -191,6 +182,49 @@
         /* Base responsive styles */
         :root {
             --container-padding: 20px;
+        }
+
+        /* Add these styles to ensure menu visibility */
+        header {
+            transition: all 0.3s ease;
+            will-change: transform, background;
+        }
+        
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+        }
+        
+        .nav-menu {
+            transition: left 0.3s ease, display 0.3s ease;
+        }
+        
+        /* Fix for the menu on mobile */
+        @media (max-width: 768px) {
+            .nav-menu {
+                background-color: rgba(255, 255, 255, 0.98) !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+                left: 0 !important;
+            }
+            
+            /* Force visibility of hamburger */
+            .hamburger {
+                display: block !important;
+                position: relative;
+                z-index: 2000;
+            }
+            
+            /* Ensure header remains visible when fixed */
+            header {
+                position: fixed !important;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+            }
         }
 
         /* Enhanced responsive styles */
@@ -689,27 +723,154 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* Mobile Menu Uniform Styles */
+        @media (max-width: 768px) {
+            /* Header and hamburger styles */
+            header {
+                height: 70px !important;
+                position: fixed !important;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                background: rgba(255, 255, 255, 0.98) !important;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+                transition: all 0.3s ease;
+                will-change: transform, background;
+            }
+            
+            .hamburger {
+                display: block !important;
+                cursor: pointer;
+                z-index: 2000;
+                position: relative;
+            }
+            
+            .hamburger .bar {
+                display: block !important;
+                width: 25px !important;
+                height: 3px !important;
+                margin: 5px auto !important;
+                background-color: #1a2b4a !important;
+                transition: all 0.3s ease-in-out !important;
+            }
+            
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0 !important;
+                transform: translateX(20px) !important;
+            }
+            
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg) !important;
+                background-color: #1a2b4a !important;
+            }
+            
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg) !important;
+                background-color: #1a2b4a !important;
+            }
+            
+            /* Mobile menu styles */
+            .nav-menu {
+                display: none;
+                position: fixed !important;
+                left: -100% !important;
+                top: 70px !important;
+                flex-direction: column !important;
+                background-color: rgba(255, 255, 255, 0.98) !important;
+                width: 100% !important;
+                text-align: center !important;
+                transition: 0.3s ease-in-out !important;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+                padding: 10px 0 40px !important;
+                z-index: 999 !important;
+                height: calc(100vh - 70px) !important;
+                overflow-y: auto !important;
+                justify-content: center !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+                left: 0 !important;
+            }
+            
+            .nav-item {
+                margin: 8px 0 !important;
+                display: block !important;
+                width: 100% !important;
+            }
+            
+            .nav-link {
+                font-size: 1.3rem !important;
+                color: #1a2b4a !important;
+                padding: 10px 20px !important;
+                display: block !important;
+                width: 100% !important;
+                text-align: center !important;
+                letter-spacing: 2px !important;
+            }
+            
+            /* Logo adjustment */
+            [src="essatologo.png"] {
+                width: 150px !important;
+            }
+            
+            /* Banner adjustment for mobile */
+            .banner-section {
+                padding-top: 120px !important;
+                padding-bottom: 50px !important;
+            }
+        }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.querySelector('.hamburger');
             const navMenu = document.querySelector('.nav-menu');
+            const header = document.querySelector('header');
+            let scrolling = false;
 
+            // Mobile menu functionality
             if (hamburger && navMenu) {
+                // Hamburger click handler
                 hamburger.addEventListener('click', function(e) {
                     e.stopPropagation();
                     hamburger.classList.toggle('active');
                     
                     if (!navMenu.classList.contains('active')) {
                         navMenu.classList.add('active');
-                        navMenu.style.display = 'flex';
-                        navMenu.style.left = '0';
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+                        navMenu.style.display = "flex";
+                        navMenu.style.left = "0";
+                        
+                        // Make sure all nav items are visible
+                        document.querySelectorAll('.nav-item').forEach(item => {
+                            item.style.display = "block";
+                            item.style.width = "100%";
+                        });
+
+                        // Ensure text is visible when menu is open
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.style.color = '#1a2b4a';
+                        });
+                        
+                        // Lock scrolling
+                        document.body.style.overflow = 'hidden';
+                        document.body.style.position = 'fixed';
+                        document.body.style.width = '100%';
+                        document.body.style.top = `-${window.scrollY}px`;
                     } else {
                         navMenu.classList.remove('active');
-                        navMenu.style.left = '-100%';
-                        document.body.style.overflow = ''; // Restore scrolling
+                        navMenu.style.left = "-100%";
+                        
+                        // Restore scrolling
+                        const scrollY = document.body.style.top;
+                        document.body.style.overflow = '';
+                        document.body.style.position = '';
+                        document.body.style.width = '';
+                        document.body.style.top = '';
+                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                        
                         setTimeout(() => {
                             if (!navMenu.classList.contains('active')) {
                                 navMenu.style.display = 'none';
@@ -718,13 +879,67 @@
                     }
                 });
 
+                // Improved scroll handler with throttling
+                function handleScroll() {
+                    if (!scrolling) {
+                        scrolling = true;
+                        
+                        // Use requestAnimationFrame for better performance
+                        window.requestAnimationFrame(() => {
+                            header.classList.add('scrolled');
+                            header.style.background = 'rgba(255, 255, 255, 0.98)';
+                            header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                            
+                            document.querySelectorAll('.nav-link').forEach(link => {
+                                link.style.color = '#1a2b4a';
+                            });
+                            
+                            scrolling = false;
+                        });
+                    }
+                }
+
+                // Ensure menu visibility on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        navMenu.style.display = 'flex';
+                        navMenu.style.position = 'relative';
+                        navMenu.style.left = '0';
+                        navMenu.style.top = 'auto';
+                        navMenu.style.width = 'auto';
+                        navMenu.style.height = 'auto';
+                        
+                        // Restore scrolling
+                        document.body.style.overflow = '';
+                        document.body.style.position = '';
+                        document.body.style.width = '';
+                        document.body.style.top = '';
+                    } else {
+                        if (!navMenu.classList.contains('active')) {
+                            navMenu.style.display = 'none';
+                            navMenu.style.position = 'fixed';
+                            navMenu.style.left = '-100%';
+                        }
+                    }
+                    // Re-apply scroll styles after resize
+                    handleScroll();
+                });
+
                 // Close menu when clicking outside
                 document.addEventListener('click', function(e) {
-                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
                         hamburger.classList.remove('active');
                         navMenu.classList.remove('active');
                         navMenu.style.left = '-100%';
-                        document.body.style.overflow = ''; // Restore scrolling
+                        
+                        // Restore scrolling
+                        const scrollY = document.body.style.top;
+                        document.body.style.overflow = '';
+                        document.body.style.position = '';
+                        document.body.style.width = '';
+                        document.body.style.top = '';
+                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                        
                         setTimeout(() => {
                             if (!navMenu.classList.contains('active')) {
                                 navMenu.style.display = 'none';
@@ -738,12 +953,23 @@
                     link.addEventListener('click', function() {
                         hamburger.classList.remove('active');
                         navMenu.classList.remove('active');
-                        navMenu.style.left = '-100%';
-                        setTimeout(() => {
-                            if (!navMenu.classList.contains('active')) {
-                                navMenu.style.display = 'none';
-                            }
-                        }, 300);
+                        
+                        // Restore scrolling
+                        const scrollY = document.body.style.top;
+                        document.body.style.overflow = '';
+                        document.body.style.position = '';
+                        document.body.style.width = '';
+                        document.body.style.top = '';
+                        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+                        
+                        if (window.innerWidth <= 768) {
+                            navMenu.style.left = "-100%";
+                            setTimeout(() => {
+                                if (!navMenu.classList.contains('active')) {
+                                    navMenu.style.display = 'none';
+                                }
+                            }, 300);
+                        }
                     });
                 });
 
@@ -751,17 +977,12 @@
                 navMenu.addEventListener('click', function(e) {
                     e.stopPropagation();
                 });
-            }
-            
-            // Add passive event listeners for better scroll performance
-            document.addEventListener('touchstart', function(){}, {passive: true});
-            
-            // Lazy load images for better mobile performance
-            if ('loading' in HTMLImageElement.prototype) {
-                const images = document.querySelectorAll('img[src]');
-                images.forEach(img => {
-                    img.setAttribute('loading', 'lazy');
-                });
+                
+                // Add event with passive flag for better scroll performance
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                
+                // Initial call to set correct state
+                handleScroll();
             }
         });
     </script>

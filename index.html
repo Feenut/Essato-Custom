@@ -31,8 +31,8 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" style="background-image: url('custom-tailoring-layton-utah.jpg'); background-position: center 25%; background-attachment: fixed; min-height: 100vh; position: relative; padding-top: 70px;" role="img" aria-label="Premier custom tailoring services at Essato Custom Clothing, serving Davis County including Layton, Bountiful, Farmington, Kaysville, Clearfield, and Syracuse with bespoke suits and made-to-measure shirts">
-        <div class="hero-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));"></div>
+    <section class="hero" style="background-image: url('custom-tailoring-layton-utah.jpg'); background-position: center 25%; background-size: cover; min-height: 100vh; position: relative; padding-top: 70px;" role="img" aria-label="Premier custom tailoring services at Essato Custom Clothing, serving Davis County including Layton, Bountiful, Farmington, Kaysville, Clearfield, and Syracuse with bespoke suits and made-to-measure shirts">
+        <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));"></div>
         <div class="container" style="position: relative; z-index: 2;">
             <div class="hero-content centered" style="padding: 140px 0; text-align: center;">
                 <h1 style="font-size: 5rem; margin-bottom: 15px; opacity: 0; animation: fadeInUp 0.8s ease forwards 0.3s; line-height: 1.2;">
@@ -244,8 +244,8 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4>Essato Custom Clothing</h4>
-                    <p>Premium Custom Suits & Shirts in Davis County</p>
-                    <p class="service-areas">Proudly serving: Layton, Bountiful, Farmington, Kaysville, Clearfield, Syracuse, and surrounding areas</p>
+                    <p>Premium Custom Suits & Bespoke Clothing</p>
+                    <p class="service-areas">Proudly serving: Layton, Bountiful, Farmington, Kaysville, Clearfield, Syracuse, and surrounding areas in Davis County</p>
                 </div>
                 <div class="footer-col">
                     <h4>Quick Links</h4>
@@ -254,15 +254,6 @@
                         <li><a href="about.html">About</a></li>
                         <li><a href="pricing.html">Pricing</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Our Services</h4>
-                    <ul class="footer-links">
-                        <li>Custom Suits in Davis County</li>
-                        <li>Bespoke Tailoring in Layton</li>
-                        <li>Made-to-Measure Shirts</li>
-                        <li>Expert Suit Fitting</li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -275,7 +266,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2021 Essato Customs. Best Custom Suits and Bespoke Tailoring in Davis County, Utah. All Rights Reserved.</p>
+                <p>&copy; 2021 Essato Customs. Best Custom Suits and Bespoke Clothing in Davis County, Utah - Serving Layton, Bountiful, Farmington, Kaysville, Clearfield & Syracuse. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
@@ -346,6 +337,7 @@
             const navMenu = document.querySelector('.nav-menu');
             const header = document.querySelector('header');
             const logoImg = document.querySelector('.logo-img');
+            let scrolling = false;
 
             if (hamburger && navMenu) {
                 // Fix for inline styles overriding our mobile menu styles
@@ -363,9 +355,18 @@
                             navMenu.classList.add('active');
                             navMenu.style.display = "flex";
                             navMenu.style.left = "0";
+                            navMenu.style.height = "calc(100vh - 70px)"; // Ensure full screen height
+                            navMenu.style.width = "100%"; // Ensure full width
                             
                             // Switch to black logo when menu is open
                             logoImg.src = "essatologo.png";
+                            
+                            // Add class to body to prevent background scrolling
+                            document.body.classList.add('menu-open');
+                            document.body.style.overflow = 'hidden';
+                            document.body.style.position = 'fixed'; // Prevent any scroll
+                            document.body.style.width = '100%';
+                            document.body.style.height = '100%';
                             
                             // Make sure all nav items are visible
                             document.querySelectorAll('.nav-item').forEach(item => {
@@ -376,10 +377,20 @@
                             // Ensure text is visible when menu is open
                             document.querySelectorAll('.nav-link').forEach(link => {
                                 link.style.color = '#1a2b4a';
+                                link.style.textAlign = 'center'; // Center menu text
+                                link.style.fontSize = '1.3rem'; // Larger text
                             });
                         } else {
                             navMenu.classList.remove('active');
                             navMenu.style.left = "-100%";
+                            
+                            // Remove class from body to restore scrolling
+                            document.body.classList.remove('menu-open');
+                            document.body.style.overflow = '';
+                            document.body.style.position = '';
+                            document.body.style.width = '';
+                            document.body.style.height = '';
+                            
                             setTimeout(() => {
                                 if (!navMenu.classList.contains('active')) {
                                     navMenu.style.display = 'none';
@@ -394,35 +405,125 @@
                     });
                 }
 
-                // Handle scroll for transparent header
+                // Improved scroll handler with throttling to prevent disappearing
                 function handleScroll() {
-                    if (window.scrollY > 50 || navMenu.classList.contains('active')) {
-                        header.classList.add('scrolled');
-                        header.style.background = 'rgba(255, 255, 255, 0.98)';
-                        header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-                        logoImg.src = "essatologo.png"; // Switch to black logo
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.style.color = '#1a2b4a';
-                        });
-                        document.querySelectorAll('.bar').forEach(bar => {
-                            bar.style.backgroundColor = '#1a2b4a';
-                        });
-                    } else {
-                        header.classList.remove('scrolled');
-                        header.style.background = 'transparent';
-                        header.style.boxShadow = 'none';
-                        logoImg.src = "essato whitelogo.png"; // Switch to white logo
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.style.color = '#ffffff';
-                        });
-                        document.querySelectorAll('.bar').forEach(bar => {
-                            bar.style.backgroundColor = '#ffffff';
+                    if (!scrolling) {
+                        scrolling = true;
+                        
+                        // Use requestAnimationFrame for better performance
+                        window.requestAnimationFrame(() => {
+                            if (window.scrollY > 50 || navMenu.classList.contains('active')) {
+                                header.classList.add('scrolled');
+                                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                                logoImg.src = "essatologo.png"; // Switch to black logo
+                                
+                                document.querySelectorAll('.nav-link').forEach(link => {
+                                    link.style.color = '#1a2b4a';
+                                });
+                                
+                                document.querySelectorAll('.bar').forEach(bar => {
+                                    bar.style.backgroundColor = '#1a2b4a';
+                                });
+                            } else {
+                                header.classList.remove('scrolled');
+                                header.style.background = 'transparent';
+                                header.style.boxShadow = 'none';
+                                logoImg.src = "essato whitelogo.png"; // Switch to white logo
+                                
+                                document.querySelectorAll('.nav-link').forEach(link => {
+                                    // Only change color if menu is not active
+                                    if (!navMenu.classList.contains('active')) {
+                                        link.style.color = '#ffffff';
+                                    }
+                                });
+                                
+                                document.querySelectorAll('.bar').forEach(bar => {
+                                    // Only change color if menu is not active
+                                    if (!navMenu.classList.contains('active')) {
+                                        bar.style.backgroundColor = '#ffffff';
+                                    }
+                                });
+                            }
+                            
+                            scrolling = false;
                         });
                     }
                 }
 
-                window.addEventListener('scroll', handleScroll);
-                handleScroll(); // Initial check
+                // Ensure menu visibility on window resize
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        navMenu.style.display = 'flex';
+                        navMenu.style.position = 'relative';
+                        navMenu.style.left = '0';
+                        navMenu.style.top = 'auto';
+                        navMenu.style.width = 'auto';
+                        navMenu.style.height = 'auto';
+                        document.body.style.overflow = '';
+                    } else {
+                        if (!navMenu.classList.contains('active')) {
+                            navMenu.style.display = 'none';
+                            navMenu.style.position = 'fixed';
+                            navMenu.style.left = '-100%';
+                        }
+                    }
+                    // Re-apply scroll styles after resize
+                    handleScroll();
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        navMenu.style.left = '-100%';
+                        document.body.style.overflow = ''; // Restore scrolling
+                        setTimeout(() => {
+                            if (!navMenu.classList.contains('active')) {
+                                navMenu.style.display = 'none';
+                                
+                                // Reset logo color when menu is closed and header is transparent
+                                if (!header.classList.contains('scrolled')) {
+                                    logoImg.src = "essato whitelogo.png";
+                                }
+                            }
+                        }, 300);
+                    }
+                });
+
+                // Close menu when clicking a link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.style.overflow = ''; // Restore scrolling
+                        if (window.innerWidth <= 768) {
+                            navMenu.style.left = "-100%";
+                            setTimeout(() => {
+                                if (!navMenu.classList.contains('active')) {
+                                    navMenu.style.display = 'none';
+                                    
+                                    // Reset logo color when menu is closed and header is transparent
+                                    if (!header.classList.contains('scrolled')) {
+                                        logoImg.src = "essato whitelogo.png";
+                                    }
+                                }
+                            }, 300);
+                        }
+                    });
+                });
+
+                // Prevent menu from closing when clicking inside it
+                navMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+                
+                // Add event with passive flag for better scroll performance
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                
+                // Initial call to set correct state
+                handleScroll();
             }
         });
 
@@ -598,17 +699,18 @@
                 display: none;
                 position: fixed !important;
                 left: -100% !important;
-                top: 90px !important;
+                top: 70px !important;
                 flex-direction: column !important;
                 background-color: rgba(255, 255, 255, 0.98) !important;
                 width: 100% !important;
                 text-align: center !important;
                 transition: 0.3s ease-in-out !important;
                 box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
-                padding: 20px 0 !important;
+                padding: 10px 0 40px !important;
                 z-index: 999 !important;
-                height: calc(100vh - 90px) !important;
+                height: calc(100vh - 70px) !important;
                 overflow-y: auto !important;
+                justify-content: center !important;
             }
 
             .nav-menu.active {
@@ -617,17 +719,19 @@
             }
 
             .nav-item {
-                margin: 16px 0 !important;
+                margin: 8px 0 !important;
                 display: block !important;
                 width: 100% !important;
             }
 
             .nav-link {
-                font-size: 1.1rem !important;
+                font-size: 1.3rem !important;
                 color: #1a2b4a !important;
                 padding: 10px 20px !important;
                 display: block !important;
                 width: 100% !important;
+                text-align: center !important;
+                letter-spacing: 2px !important;
             }
 
             /* When menu is active, ensure text is visible */
@@ -643,21 +747,39 @@
             /* Hamburger Animation */
             .hamburger.active .bar:nth-child(2) {
                 opacity: 0 !important;
-                transform: translateX(20px);
+                transform: translateX(20px) !important;
             }
 
             .hamburger.active .bar:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
+                transform: translateY(8px) rotate(45deg) !important;
+                background-color: #1a2b4a !important;
             }
 
             .hamburger.active .bar:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
+                transform: translateY(-8px) rotate(-45deg) !important;
+                background-color: #1a2b4a !important;
             }
 
             /* When menu is active, ensure header has solid background */
             header.menu-active {
                 background: rgba(255, 255, 255, 0.98) !important;
                 box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            }
+
+            /* Fix content overflow */
+            body.menu-open {
+                overflow: hidden !important;
+            }
+            
+            /* Make header slightly shorter on mobile to help with spacing */
+            header {
+                height: 70px !important;
+            }
+            
+            /* Adjust logo size to match smaller header */
+            [src="essato whitelogo.png"], 
+            [src="essatologo.png"] {
+                width: 150px !important;
             }
         }
 
@@ -762,16 +884,17 @@
                 display: none;
                 position: fixed;
                 left: -100%;
-                top: 90px;
+                top: 70px;
                 flex-direction: column;
                 background-color: rgba(255, 255, 255, 0.98);
                 width: 100%;
                 text-align: center;
                 transition: 0.3s ease-in-out;
                 box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                padding: 20px 0;
+                padding: 10px 0;
                 z-index: 999;
-                height: calc(100vh - 90px);
+                height: auto;
+                max-height: calc(100vh - 70px);
                 overflow-y: auto;
             }
 
@@ -781,13 +904,13 @@
             }
 
             .nav-item {
-                margin: 16px 0;
-                width: 100%;
+                margin: 8px 0 !important;
+                width: 100% !important;
             }
 
             .nav-link {
                 font-size: 1.1rem !important;
-                padding: 10px 20px !important;
+                padding: 8px 20px !important;
                 display: block !important;
                 width: 100% !important;
             }
@@ -918,6 +1041,49 @@
             .gallery-item img {
                 object-fit: contain !important;
                 height: auto !important;
+            }
+        }
+
+        /* Add these styles to ensure menu visibility */
+        header {
+            transition: all 0.3s ease;
+            will-change: transform, background;
+        }
+        
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+        }
+        
+        .nav-menu {
+            transition: left 0.3s ease, display 0.3s ease;
+        }
+        
+        /* Fix for the menu on mobile */
+        @media (max-width: 768px) {
+            .nav-menu {
+                background-color: rgba(255, 255, 255, 0.98) !important;
+            }
+            
+            .nav-menu.active {
+                display: flex !important;
+                left: 0 !important;
+            }
+            
+            /* Force visibility of hamburger */
+            .hamburger {
+                display: block !important;
+                position: relative;
+                z-index: 2000;
+            }
+            
+            /* Ensure header remains visible when fixed */
+            header {
+                position: fixed !important;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
             }
         }
     </style>
